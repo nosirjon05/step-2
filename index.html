@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>step-2</title>
+  <link rel="stylesheet" href="main.css">
+  <style>
+    #pw-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.75);display:flex;align-items:center;justify-content:center;z-index:9999}
+    #pw-box{background:#fff;padding:24px;border-radius:8px;max-width:320px;width:90%;box-shadow:0 6px 24px rgba(0,0,0,0.3);text-align:center}
+    #pw-box input{width:100%;padding:8px;margin-top:12px;margin-bottom:8px;font-size:16px}
+    #pw-box button{padding:8px 12px;font-size:16px}
+  </style>
+</head>
+<body>
+  <div id="pw-overlay" aria-hidden="false">
+    <div id="pw-box" role="dialog" aria-modal="true" aria-labelledby="pw-title">
+      <h2 id="pw-title">Enter password to continue</h2>
+      <form id="pw-form">
+        <input id="pw-input" type="password" placeholder="Password"autocomplete="current-password" required />
+        <div>
+          <button type="submit">Enter</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Simple client-side gate. THIS IS NOT SECURE for protecting real content.
+    // Change the value below to set your password.
+    (function(){
+      const PASSWORD = '57'; // <-- set your password here
+      const overlay = document.getElementById('pw-overlay');
+      const form = document.getElementById('pw-form');
+      const input = document.getElementById('pw-input');
+      form.addEventListener('submit', function(e){
+        e.preventDefault();
+        if(input.value === PASSWORD){
+          overlay.style.display = 'none';
+        } else {
+          input.value = '';
+          input.focus();
+          alert('Incorrect password');
+        }
+      });
+      // Optional: prevent tabbing to page content while overlay visible
+      document.addEventListener('focus', function(ev){
+        if(overlay.style.display !== 'none' && !overlay.contains(ev.target)) ev.stopPropagation();
+      }, true);
+    })();
+  </script>
+
+  <div class="question">
+  <p>Qaysi javobda <strong>yorqin</strong> so'zining izoh(lar)i <strong>to'g'ri ko'rsatilgan?</strong></p>
+  <ul class="list">
+    <li class="style">1) Ko'chma ma'nosi: baxtli.</li>
+    <li class="style">2) Sinonimi: porloq.</li>
+    <li class="style">3) Paronimining sinonimi: shu'la.</li>
+    <li class="style">4) Ominimi: yorqin.</li>
+  </ul>
+  <ul class="list">
+    <li class="style"><label><input type="radio" name="q1" value="3"> a) 1, 2</label></li>
+    <li class="style"><label><input type="radio" name="q1" value="4"> b) 1, 2, 3</label></li>
+    <li class="style"><label><input type="radio" name="q1" value="5"> c) 1, 2, 4</label></li>
+    <li class="style"><label><input type="radio" name="q1" value="6"> d) to'g'ri javob yo'q</label></li>
+  </ul>
+  <button id="submit1">Submit</button>
+  <p id="result1"></p>
+</div>
+
+<script>
+document.getElementById('submit1').addEventListener('click', function(){
+  const selected = document.querySelector('input[name="q1"]:checked');
+  const resultEl = document.getElementById('result1');
+  if (!selected) {
+    resultEl.textContent = 'Tanlasenchi bittasini.';
+  } else {
+    if (selected.value === '4') {
+      resultEl.textContent = 'To\'g\'ri! (^///^)  "25-may" eslab qoling';
+    } else {
+      resultEl.textContent = 'Noto\'ri -_-.';
+    }
+  }
+});
+</script> 
+</body>
+</html>
